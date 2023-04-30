@@ -2,7 +2,7 @@
 
 APP_NAME = database-service
 BUILD_DIR = $(pwd)/build
-MIGRATIONS_FOLDER = $(PWD)/platform/migrations
+MIGRATIONS_FOLDER = $(PWD)/db/migrations
 DATABASE_URL = postgres://postgres:password@localhost/postgres?sslmode=disable
 
 args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
@@ -41,5 +41,5 @@ migrate.force:
 migrate.create:
 	migrate create -ext sql -dir $(MIGRATIONS_FOLDER) -seq ${call args, migration_name}
 
-docker.postgres:
+postgres:
 	docker compose up db
