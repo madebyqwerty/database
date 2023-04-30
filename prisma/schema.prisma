@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_SERVER_URI")
+}
+
+model Users {
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  password      String
+  updated_at    DateTime       @updatedAt
+  created_at    DateTime       @default(now())
+  Students      Students?
+  Parents       Parents?
+  ClassTeachers ClassTeachers?
+}
+
+model Students {
+  id        Int       @id @default(autoincrement())
+  user      Users     @relation(fields: [usersId], references: [id])
+  usersId   Int       @unique
+  Parents   Parents[]
+  Classes   Classes?  @relation(fields: [classesId], references: [id])
+  classesId Int?
+}
+
+model Parents {
+  id       Int        @id @default(autoincrement())
+  user     Users      @relation(fields: [usersId], references: [id])
+  usersId  Int        @unique
+  chidlren Students[]
+}
+
+model ClassTeachers {
+  id      Int       @id @default(autoincrement())
+  user    Users     @relation(fields: [usersId], references: [id])
+  usersId Int       @unique
+  Classes Classes[]
+}
+
+model Classes {
+  id              Int           @id @default(autoincrement())
+  name            String
+  teacher         ClassTeachers @relation(fields: [classTeachersId], references: [id])
+  classTeachersId Int           @unique
+  Students        Students[]
+}
