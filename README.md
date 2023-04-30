@@ -9,10 +9,9 @@ You can run many commands, all of them are defined in the [Makefile](Makefile).
 1. To start postgres - `make postgres`
 2. To start development server - `make dev`
 3. To build - `make build`
-4. To create a new migration - `make migration <migration_name>`
 
 ## How to use
 
 ### Migrations
 
-To create migrations, you need to install the [GO migrate CLI](https://github.com/golang-migrate/migrate/tree/master)
+Migrations are handled by [prisma](https://prisma.io). After changing the Prisma schema, you need to run `make migration`, which will automatically create neccesary migration files on the database.

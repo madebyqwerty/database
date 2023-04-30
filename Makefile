@@ -29,17 +29,11 @@ dev: swag
 swag:
 	swag init
 
-migrate.up:
-	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" up
+migrate:
+	npx prisma migrate dev
 
-migrate.down:
-	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" down
-
-migrate.force:
-	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" force $(version)
-
-migrate.create:
-	migrate create -ext sql -dir $(MIGRATIONS_FOLDER) -seq ${call args, migration_name}
+migrate.prod:
+	npx prisma migrate deploy
 
 postgres:
 	docker compose up db
