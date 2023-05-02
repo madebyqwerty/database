@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is an API for the \u003ccodename\u003e project",
-        "title": "Database service API",
+        "description": "This is an API for the Shift project",
+        "title": "Shift API",
         "contact": {},
         "license": {
             "name": "MIT",

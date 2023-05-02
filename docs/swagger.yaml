@@ -2,11 +2,11 @@ basePath: /api
 host: localhost:5000
 info:
   contact: {}
-  description: This is an API for the <codename> project
+  description: This is an API for the Shift project
   license:
     name: MIT
     url: https://mit-license.org/
-  title: Database service API
+  title: Shift API
   version: "1.0"
 paths:
   /hello:

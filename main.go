@@ -10,9 +10,9 @@ import (
 	"github.com/madebyqwerty/database-service/utils"
 )
 
-// @title Database service API
+// @title Shift API
 // @version 1.0
-// @description This is an API for the <codename> project
+// @description This is an API for the Shift project
 
 // @host localhost:5000
 // @BasePath /api
