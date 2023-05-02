@@ -1,7 +1,48 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is an API for the \u003ccodename\u003e project",
+        "title": "Database service API",
+        "contact": {},
+        "license": {
+            "name": "MIT",
+            "url": "https://mit-license.org/"
+        },
+        "version": "1.0"
     },
-    "paths": {}
+    "host": "localhost:5000",
+    "basePath": "/api",
+    "paths": {
+        "/hello": {
+            "get": {
+                "description": "Returns a hello message. Can be used to check if the service is online.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Hello route",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
 }
