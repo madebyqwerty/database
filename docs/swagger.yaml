@@ -8,7 +8,22 @@ info:
     url: https://mit-license.org/
   title: Shift API
   version: "1.0"
-paths: {}
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Returns OK message if ther server is running
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get status
+      tags:
+      - Public
 securityDefinitions:
   ApiKeyAuth:
     in: header

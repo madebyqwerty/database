@@ -5,6 +5,8 @@ import (
 
 	"github.com/madebyqwerty/database-service/api"
 	"github.com/madebyqwerty/database-service/api/books"
+	"github.com/madebyqwerty/database-service/api/students"
+	"github.com/madebyqwerty/database-service/api/users"
 	"github.com/madebyqwerty/database-service/database"
 	"github.com/madebyqwerty/database-service/server"
 
@@ -35,6 +37,8 @@ func main() {
 
 	// Migrations
 	database.DB.AutoMigrate(&books.Book{})
+	database.DB.AutoMigrate(&users.User{})
+	database.DB.AutoMigrate(&students.Student{})
 
 	// Api routes
 	api.Setup(app)

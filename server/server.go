@@ -26,6 +26,14 @@ func setupMiddlewares(app *fiber.App) {
 	app.Use(logger.New())
 }
 
+// Status func
+// @Summary Get status
+// @Description Returns OK message if ther server is running
+// @Tags Public
+// @Accept json
+// @Produce json
+// @Success 200 {string} ok "OK"
+// @Router / [get]
 func Create() *fiber.App {
 	database.SetupDatabase()
 

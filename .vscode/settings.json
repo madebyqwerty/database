@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Bakaláři",
+      "database": "database",
+      "username": "user",
+      "password": "password"
+    }
+  ]
+}
