@@ -3,14 +3,15 @@ package books
 import (
 	"bytes"
 	"encoding/json"
-	"fiberseed/database"
-	"fiberseed/server"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http/httptest"
 	"os"
 	"testing"
+
+	"github.com/madebyqwerty/database-service/database"
+	"github.com/madebyqwerty/database-service/server"
 
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"

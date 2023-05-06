@@ -2,8 +2,9 @@ package books
 
 import (
 	"errors"
-	"fiberseed/database"
-	"fiberseed/pkg"
+
+	"github.com/madebyqwerty/database-service/database"
+	"github.com/madebyqwerty/database-service/pkg"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"

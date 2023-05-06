@@ -1,4 +1,4 @@
-# FiberSeed
+# github.com/madebyqwerty/database-service
 
 REST API Fiber boilerplate
 
@@ -23,9 +23,9 @@ REST API Fiber boilerplate
 
 ## ⚙️ Usage
 
-You can fork this repo or use [Fiberseed as a package](https://github.com/embedmode/fiberseed/blob/main/main.go)
+You can fork this repo or use [github.com/madebyqwerty/database-service as a package](https://github.com/embedmode/github.com/madebyqwerty/database-service/blob/main/main.go)
 
-- git clone https://github.com/embedmode/fiberseed.git
+- git clone https://github.com/embedmode/github.com/madebyqwerty/database-service.git
 - Copy .env.example to .env
 - Install postgres or use docker-compose up postgres
 - go mod download
@@ -51,8 +51,8 @@ air
 docker-compose up
 
 # Building and running docker image (you will need postgres)
-docker build -t fiberseed .
-docker run -d -p 8080:8080 fiberseed
+docker build -t github.com/madebyqwerty/database-service .
+docker run -d -p 8080:8080 github.com/madebyqwerty/database-service
 
 # only postgres
 docker-compose up postgres
@@ -60,7 +60,7 @@ docker-compose up postgres
 
 ## 📜 Changelog
 
-We use [GitHub releases](https://github.com/embedmode/fiberseed/releases).
+We use [GitHub releases](https://github.com/embedmode/github.com/madebyqwerty/database-service/releases).
 
 ## 🔐 Security
 

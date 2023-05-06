@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fiberseed/api"
-	"fiberseed/api/books"
-	"fiberseed/database"
-	"fiberseed/server"
+	"github.com/madebyqwerty/database-service/api"
+	"github.com/madebyqwerty/database-service/api/books"
+	"github.com/madebyqwerty/database-service/database"
+	"github.com/madebyqwerty/database-service/server"
 	"log"
 
 	"github.com/joho/godotenv"

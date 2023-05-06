@@ -1,7 +1,7 @@
 package api
 
 import (
-	"fiberseed/api/books"
+	"github.com/madebyqwerty/database-service/api/books"
 
 	"github.com/gofiber/fiber/v2"
 )

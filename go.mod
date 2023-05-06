@@ -1,4 +1,4 @@
-module fiberseed
+module github.com/madebyqwerty/database-service
 
 go 1.16
 

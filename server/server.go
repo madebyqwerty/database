@@ -1,9 +1,10 @@
 package server
 
 import (
-	"fiberseed/database"
 	"fmt"
 	"os"
+
+	"github.com/madebyqwerty/database-service/database"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
