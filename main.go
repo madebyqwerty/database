@@ -1,15 +1,29 @@
 package main
 
 import (
+	"log"
+
 	"github.com/madebyqwerty/database-service/api"
 	"github.com/madebyqwerty/database-service/api/books"
 	"github.com/madebyqwerty/database-service/database"
 	"github.com/madebyqwerty/database-service/server"
-	"log"
 
 	"github.com/joho/godotenv"
 )
 
+// @title Shift API
+// @version 1.0
+// @description This is an API for the Shift project
+
+// @host localhost:5000
+// @BasePath /api
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+
+// @license.name MIT
+// @license.url https://mit-license.org/
 func main() {
 	err := godotenv.Load()
 	if err != nil {

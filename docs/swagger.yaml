@@ -1,0 +1,17 @@
+basePath: /api
+host: localhost:5000
+info:
+  contact: {}
+  description: This is an API for the Shift project
+  license:
+    name: MIT
+    url: https://mit-license.org/
+  title: Shift API
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
