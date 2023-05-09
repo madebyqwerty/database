@@ -13,9 +13,9 @@
     "host": "localhost:5000",
     "basePath": "/api",
     "paths": {
-        "/hello": {
+        "/": {
             "get": {
-                "description": "Returns a hello message. Can be used to check if the service is online.",
+                "description": "Returns OK message if ther server is running",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,13 +25,12 @@
                 "tags": [
                     "Public"
                 ],
-                "summary": "Hello route",
+                "summary": "Get status",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "type": "string"
                         }
                     }
                 }

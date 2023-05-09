@@ -20,9 +20,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/hello": {
+        "/": {
             "get": {
-                "description": "Returns a hello message. Can be used to check if the service is online.",
+                "description": "Returns OK message if ther server is running",
                 "consumes": [
                     "application/json"
                 ],
@@ -32,13 +32,12 @@ const docTemplate = `{
                 "tags": [
                     "Public"
                 ],
-                "summary": "Hello route",
+                "summary": "Get status",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "type": "string"
                         }
                     }
                 }

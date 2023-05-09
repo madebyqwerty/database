@@ -9,21 +9,19 @@ info:
   title: Shift API
   version: "1.0"
 paths:
-  /hello:
+  /:
     get:
       consumes:
       - application/json
-      description: Returns a hello message. Can be used to check if the service is
-        online.
+      description: Returns OK message if ther server is running
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            additionalProperties: true
-            type: object
-      summary: Hello route
+            type: string
+      summary: Get status
       tags:
       - Public
 securityDefinitions:

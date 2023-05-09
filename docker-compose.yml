@@ -1,17 +1,23 @@
 version: "3"
-# PostgreSQL service
 services:
-  db:
-    image: postgres
-    restart: always
+  app:
+    build: .
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
+      SERVER_HOST: 0.0.0.0
+      POSTGRES_HOST: postgres
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    env_file: .env
     ports:
       - 5432:5432
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - database_postgres:/var/lib/postgresql/data
 
 volumes:
-  postgres-data:
+  database_postgres:

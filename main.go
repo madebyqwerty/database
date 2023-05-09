@@ -1,13 +1,16 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/logger"
-	_ "github.com/joho/godotenv/autoload"
+	"log"
+
+	"github.com/madebyqwerty/database-service/api"
+	"github.com/madebyqwerty/database-service/api/books"
+	"github.com/madebyqwerty/database-service/api/students"
+	"github.com/madebyqwerty/database-service/api/users"
 	"github.com/madebyqwerty/database-service/database"
-	"github.com/madebyqwerty/database-service/routes"
-	"github.com/madebyqwerty/database-service/utils"
+	"github.com/madebyqwerty/database-service/server"
+
+	"github.com/joho/godotenv"
 )
 
 // @title Shift API
@@ -24,20 +27,23 @@ import (
 // @license.name MIT
 // @license.url https://mit-license.org/
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-	app := fiber.New()
-	app.Use(
-		cors.New(),
-		logger.New(),
-	)
+	// Server initialization
+	app := server.Create()
 
-	// Register all routes
-	routes.PublicRoutes(app)
-	routes.Swagger(app)
+	// Migrations
+	database.DB.AutoMigrate(&books.Book{})
+	database.DB.AutoMigrate(&users.User{})
+	database.DB.AutoMigrate(&students.Student{})
 
-	database.Connect()
+	// Api routes
+	api.Setup(app)
 
-	// Start server
-	utils.StartServerWithGracefulShutdown(app)
-
+	if err := server.Listen(app); err != nil {
+		log.Panic(err)
+	}
 }
