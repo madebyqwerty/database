@@ -24,6 +24,9 @@ tmp
 # VS Code
 .vscode
 
+
 # Prisma
 generated/client/
+node_modules/
+
 
