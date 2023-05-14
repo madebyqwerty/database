@@ -1,33 +1,32 @@
 import { db } from "../kysely.ts";
-import { app } from "../main.ts";
 import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
+// @deno-types="npm:@types/express@4"
+import express from "npm:express@4.18.2";
+
+const router = express.Router();
 
 const userPostReqBodySchema = z.object({
   name: z.string({ required_error: "name/required" }),
 });
 
-app.post("/users", async (req, res) => {
+router.post("/users", async (req, res) => {
   const result = userPostReqBodySchema.safeParse(req.body);
 
   if (!result.success) {
     res.status(400).json(result.error.flatten());
+    return;
   }
-
-  const body = req.body as z.infer<typeof userPostReqBodySchema>;
-
-  const { name } = body;
   const user = await db
     .insertInto("User")
-    .values({ name })
+    .values({ name: result.data.name })
     .executeTakeFirstOrThrow();
 
   res.json(user);
 });
 
-app.get("/users", async (_req, res) => {
-  const users = await db
-    .selectFrom("User")
-    .selectAll()
-    .executeTakeFirstOrThrow();
+router.get("/users", async (_req, res) => {
+  const users = await db.selectFrom("User").selectAll().execute();
   res.json(users);
 });
+
+export default router;
