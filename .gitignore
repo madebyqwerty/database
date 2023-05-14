@@ -23,3 +23,7 @@ tmp
 
 # VS Code
 .vscode
+
+# Prisma
+generated/client/
+
