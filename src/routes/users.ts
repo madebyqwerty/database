@@ -5,6 +5,63 @@ import express from "npm:express@4.18.2";
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *   User:
+ *    type: object
+ *    required:
+ *     - name
+ *    properties:
+ *      name:
+ *        type: string
+ *        description: The user's name.
+ *      id:
+ *        type: string
+ *        description: The user's id.
+ *    example:
+ *      name: John Doe
+ *      id: f7cabd53-49e1-4c93-b59e-6035811b134d
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Users
+ *  description: API for managing users.
+ * /users:
+ *  get:
+ *   summary: Returns a list of users.
+ *   tags: [Users]
+ *   responses:
+ *    200:
+ *      description: The list of users.
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/User'
+ *    400:
+ *     description: Bad request.
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        properties:
+ *          name: string
+ *        example:
+ *          name: name/required
+ *
+ *    500:
+ *      description: Internal server error.
+ */
+router.get("/users", async (_req, res) => {
+  const users = await db.selectFrom("User").selectAll().execute();
+  res.json(users);
+});
+
 const userPostReqBodySchema = z.object({
   name: z.string({ required_error: "name/required" }),
 });
@@ -22,11 +79,6 @@ router.post("/users", async (req, res) => {
     .executeTakeFirstOrThrow();
 
   res.json(user);
-});
-
-router.get("/users", async (_req, res) => {
-  const users = await db.selectFrom("User").selectAll().execute();
-  res.json(users);
 });
 
 export default router;
