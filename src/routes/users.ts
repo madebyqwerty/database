@@ -26,7 +26,7 @@ const router = express.Router();
  */
 
 /**
- * @swagger
+ * @openapi
  * tags:
  *  name: Users
  *  description: API for managing users.
@@ -43,17 +43,6 @@ const router = express.Router();
  *            type: array
  *            items:
  *              $ref: '#/components/schemas/User'
- *    400:
- *     description: Bad request.
- *     content:
- *      application/json:
- *       schema:
- *        type: object
- *        properties:
- *          name: string
- *        example:
- *          name: name/required
- *
  *    500:
  *      description: Internal server error.
  */
@@ -66,6 +55,30 @@ const userPostReqBodySchema = z.object({
   name: z.string({ required_error: "name/required" }),
 });
 
+/**
+ * @openapi
+ * /users:
+ *  post:
+ *   summary: Creates a new user.
+ *   tags: [Users]
+ *   responses:
+ *    200:
+ *      description: The created user.
+ *      content:
+ *       application/json:
+ *        schema:
+ *          $ref: '#/components/schemas/User'
+ *    400:
+ *     description: Bad request.
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        properties:
+ *          name: string
+ *        example:
+ *          name: name/required
+ */
 router.post("/users", async (req, res) => {
   const result = userPostReqBodySchema.safeParse(req.body);
 
