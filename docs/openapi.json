@@ -37,6 +37,27 @@
               }
             }
           },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new user.",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "The created user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
           "400": {
             "description": "Bad request.",
             "content": {
@@ -52,9 +73,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal server error."
           }
         }
       }
