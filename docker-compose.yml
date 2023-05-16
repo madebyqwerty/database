@@ -1,14 +1,15 @@
 version: "3"
 services:
-  app:
-    build: .
-    environment:
-      SERVER_HOST: 0.0.0.0
-      POSTGRES_HOST: postgres
+  deno-express-api:
+    container_name: deno-express-api
+    image: deno
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
     ports:
-      - 8080:8080
-    depends_on:
-      - postgres
+      - "3000:3000"
 
   postgres:
     image: postgres:latest

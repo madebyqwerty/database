@@ -1,28 +1,9 @@
-FROM golang:1.16-alpine AS builder
+FROM denoland/deno:latest as base
 
-ENV CGO_ENABLED=0
-ENV GOOS=linux
-ENV GOARCH=amd64
+WORKDIR /app
 
-WORKDIR /build
+COPY . ./
 
-COPY go.mod .
-COPY go.sum .
+RUN deno cache main.ts
 
-RUN go mod download
-
-COPY . .
-
-RUN go build -o main .
-
-WORKDIR /dist
-
-RUN cp /build/main .
-
-FROM scratch
-
-COPY --from=builder /dist/main /
-COPY --from=builder /build/.env /
-
-# Command to run
-ENTRYPOINT ["/main"]
+CMD ["task", "start"]
