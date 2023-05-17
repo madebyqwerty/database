@@ -6,9 +6,9 @@ import userRouter from "./routes/users.ts";
 import swaggerJsDoc from "npm:swagger-jsdoc";
 import swaggerUi from "npm:swagger-ui-express";
 import swaggerConfig from "./swagger-config.json" assert { type: "json" };
+import { port } from "./constants.ts";
 
 export const app = express();
-const port = Number(Deno.env.get("PORT")) || 5000;
 
 const reqLogger = (req: Request, _res: Response, next: NextFunction) => {
   console.info(`🌐 ${req.method}: ${req.url} by ${req.hostname}`);

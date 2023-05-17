@@ -773,6 +773,7 @@
       "@types/swagger-jsdoc": "@types/swagger-jsdoc@6.0.1",
       "body-parser": "body-parser@1.20.2",
       "express@4.18.2": "express@4.18.2",
+      "kysely@0.24.2": "kysely@0.24.2",
       "swagger-jsdoc": "swagger-jsdoc@6.2.8",
       "swagger-ui-express": "swagger-ui-express@4.6.3_express@4.18.2"
     },
@@ -1162,6 +1163,10 @@
         "dependencies": {
           "argparse": "argparse@2.0.1"
         }
+      },
+      "kysely@0.24.2": {
+        "integrity": "sha512-+7eaTJNUYm2yRq1x+lEOZc+78TO35dTZ9b0dh49+Z9CTt2byMSbMiOKpwPlOyCAaHD4kILkAYWYZNywFlmBwRA==",
+        "dependencies": {}
       },
       "lodash.get@4.4.2": {
         "integrity": "sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==",
