@@ -21,7 +21,7 @@ app.get("/", (_req, res) => {
   res.status(200).send("Hello World!");
 });
 
-app.use("/api/v1", userRouter);
+app.use("/api", userRouter);
 
 const specs = swaggerJsDoc({
   definition: swaggerConfig,
