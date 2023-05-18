@@ -5,6 +5,14 @@ import { serverURL } from "../constants.ts";
 
 const endpoint = `${serverURL}/users`;
 
+const validateSchema = (user: Record<string, unknown>) => {
+  assert(typeof user.id === "string");
+  assert(isValidUUID(user.id));
+  assert(typeof user.name === "string");
+  assert(Object.keys(user).includes("name"));
+  assert(Object.keys(user).includes("id"));
+};
+
 Deno.test("Should create a user", async () => {
   const res = await fetch(endpoint, {
     method: "POST",
@@ -20,8 +28,7 @@ Deno.test("Should create a user", async () => {
   assertEquals(res.status, 200);
   const user = await res.json();
   assertEquals(user.name, "Tomáš Kebrle");
-  assert(typeof user.id === "string");
-  assert(isValidUUID(user.id));
+  validateSchema(user);
 });
 
 Deno.test("Should not create a user", async () => {
@@ -37,7 +44,6 @@ Deno.test("Should not create a user", async () => {
   assertEquals(res.status, 400);
   const user = await res.json();
 
-  console.log(user);
   assertEquals(user.fieldErrors.name[0], "required");
 });
 
@@ -51,11 +57,7 @@ Deno.test("Should get all users", async () => {
   assert(Array.isArray(users));
   assert(users.length > 0);
 
-  users.forEach((user) => {
-    assert(typeof user.id === "string");
-    assert(isValidUUID(user.id));
-    assert(typeof user.name === "string");
-  });
+  users.forEach(validateSchema);
 });
 
 Deno.test("Should get a user by id", async () => {
@@ -73,6 +75,7 @@ Deno.test("Should get a user by id", async () => {
 
   assertEquals(user2.id, user.id);
   assertEquals(user2.name, user.name);
+  validateSchema(user2);
 });
 
 Deno.test(
