@@ -2,6 +2,8 @@
 import express from "npm:express@4.18.2";
 import { db } from "../../kysely.ts";
 import { isValidUUID } from "../../utils/isValidUUID.ts";
+// @deno-types="npm:@types/multer"
+import multer from "npm:multer";
 
 const router = express.Router();
 
@@ -161,6 +163,30 @@ router.post("/absences/:userId", async (req, res) => {
     .execute();
 
   res.json(newAbsence);
+});
+
+const scan = multer({ dest: "/absences/scan" });
+
+/**
+ * @openapi
+ * /absences/scan:
+ *  post:
+ *    summary: Creates a new absence by scanning a paper.
+ *    tags: [Absences]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              image:
+ *                type: string
+ *                format: binary
+ */
+router.post("/absences/scan", scan.single("image"), (req, res) => {
+  console.log(req.file);
+  res.json({ success: true });
 });
 
 export default router;
