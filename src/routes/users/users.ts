@@ -1,8 +1,8 @@
-import { db } from "../kysely.ts";
+import { db } from "../../kysely.ts";
 import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
 // @deno-types="npm:@types/express@4"
 import express from "npm:express@4.18.2";
-import { isValidUUID } from "../utils/isValidUUID.ts";
+import { isValidUUID } from "../../utils/isValidUUID.ts";
 
 const router = express.Router();
 

@@ -1,12 +1,13 @@
 // @deno-types="npm:@types/express@4"
 import express, { NextFunction, Request, Response } from "npm:express@4.18.2";
 import bodyParser from "npm:body-parser";
-import userRouter from "./routes/users.ts";
+import userRouter from "./routes/users/users.ts";
 // @deno-types="npm:@types/swagger-jsdoc"
 import swaggerJsDoc from "npm:swagger-jsdoc";
 import swaggerUi from "npm:swagger-ui-express";
 import swaggerConfig from "./swagger-config.json" assert { type: "json" };
 import { port } from "./constants.ts";
+import absenceRouter from "./routes/absences/absences.ts";
 
 export const app = express();
 
@@ -22,6 +23,7 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api", userRouter);
+app.use("/api", absenceRouter);
 
 const specs = swaggerJsDoc({
   definition: swaggerConfig,

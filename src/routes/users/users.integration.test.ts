@@ -1,7 +1,7 @@
 import { assert } from "https://deno.land/std@0.160.0/_util/assert.ts";
 import { assertEquals } from "https://deno.land/std@0.160.0/testing/asserts.ts";
-import { isValidUUID } from "../utils/isValidUUID.ts";
-import { serverURL } from "../constants.ts";
+import { isValidUUID } from "../../utils/isValidUUID.ts";
+import { serverURL } from "../../constants.ts";
 
 const endpoint = `${serverURL}/users`;
 
