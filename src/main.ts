@@ -27,7 +27,7 @@ app.use("/api", absenceRouter);
 
 const specs = swaggerJsDoc({
   definition: swaggerConfig,
-  apis: ["./src/routes/*.ts"],
+  apis: ["./src/routes/*/*.ts"],
 });
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
