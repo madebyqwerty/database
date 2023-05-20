@@ -3,8 +3,8 @@ import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
 import { isValidUUID } from "../../utils/isValidUUID.ts";
 import { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
-const router = new Router({
-  routerPath: "/api",
+export const router = new Router({
+  prefix: "/api",
 });
 
 /**
@@ -64,7 +64,10 @@ const router = new Router({
  */
 router.get("/users", async (ctx) => {
   const users = await db.selectFrom("User").selectAll().execute();
+  ctx.response.status = 200;
+  ctx.response.type = "application/json";
   ctx.response.body = users;
+  return;
 });
 
 const userPostReqBodySchema = z.object({
@@ -109,9 +112,10 @@ const userPostReqBodySchema = z.object({
  */
 router.get("/users/:id", async (ctx) => {
   const id = ctx.params.id;
+  ctx.response.type = "application/json";
 
   if (!isValidUUID(id)) {
-    ctx.response.status = 200;
+    ctx.response.status = 400;
     ctx.response.body = { id: "not-valid" };
     return;
   }
@@ -128,6 +132,7 @@ router.get("/users/:id", async (ctx) => {
     return;
   }
 
+  ctx.response.status = 200;
   ctx.response.body = user;
 });
 
@@ -176,7 +181,7 @@ router.get("/users/:id", async (ctx) => {
 router.post("/users", async ({ request, response }) => {
   const body = request.body({ type: "json" });
 
-  const result = userPostReqBodySchema.safeParse(body);
+  const result = userPostReqBodySchema.safeParse(await body.value);
 
   if (!result.success) {
     response.status = 400;
@@ -194,5 +199,3 @@ router.post("/users", async ({ request, response }) => {
 
   response.body = user;
 });
-
-export default router;

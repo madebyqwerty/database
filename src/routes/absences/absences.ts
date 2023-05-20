@@ -3,7 +3,9 @@ import { isValidUUID } from "../../utils/isValidUUID.ts";
 import { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 import z from "https://deno.land/x/zod@v3.21.4/index.ts";
 
-const router = new Router();
+const router = new Router({
+  prefix: "/api",
+});
 
 /**
  * @swagger
@@ -151,7 +153,7 @@ router.post("/absences/:userId", async (ctx) => {
   const { userId } = ctx.params;
   const body = ctx.request.body({ type: "json" });
 
-  const result = absenceBody.safeParse(body);
+  const result = absenceBody.safeParse(await body.value);
 
   if (!result.success) {
     ctx.response.status = 400;
