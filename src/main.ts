@@ -1,16 +1,10 @@
 import userRouter from "./routes/users/users.ts";
 // @deno-types="npm:@types/swagger-jsdoc"
 import swaggerJsDoc from "npm:swagger-jsdoc";
-// @deno-types="npm:@types/swagger-ui-express"
-import swaggerUi from "npm:swagger-ui-express";
 import swaggerConfig from "./swagger-config.json" assert { type: "json" };
 import { port } from "./constants.ts";
 import absenceRouter from "./routes/absences/absences.ts";
-import {
-  Application,
-  Context,
-  Router,
-} from "https://deno.land/x/oak@v12.4.0/mod.ts";
+import { Application, Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
 export const app = new Application();
 
@@ -32,7 +26,9 @@ app.use(async (ctx, next) => {
 });
 
 app.use(userRouter.routes());
-// app.use(absenceRouter.routes());
+app.use(userRouter.allowedMethods());
+app.use(absenceRouter.routes());
+app.use(absenceRouter.allowedMethods());
 
 const specs = swaggerJsDoc({
   definition: swaggerConfig,

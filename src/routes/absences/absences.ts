@@ -1,11 +1,9 @@
-// @deno-types="npm:@types/express@4"
-import express from "npm:express@4.18.2";
 import { db } from "../../kysely.ts";
 import { isValidUUID } from "../../utils/isValidUUID.ts";
-// @deno-types="npm:@types/multer"
-import multer from "npm:multer";
+import { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
+import z from "https://deno.land/x/zod@v3.21.4/index.ts";
 
-const router = express.Router();
+const router = new Router();
 
 /**
  * @swagger
@@ -79,11 +77,12 @@ const router = express.Router();
  *             - required
  *             - not-valid
  */
-router.get("/absences/:userId", async (req, res) => {
-  const { userId } = req.params;
+router.get("/absences/:userId", async (ctx) => {
+  const { userId } = ctx.params;
 
   if (!isValidUUID(userId)) {
-    res.status(400).json({ id: "not-valid" });
+    ctx.response.status = 400;
+    ctx.response.body = { id: "not-valid" };
     return;
   }
 
@@ -95,11 +94,17 @@ router.get("/absences/:userId", async (req, res) => {
     .execute();
 
   if (absences.length === 0) {
-    res.status(404).json({ id: "not-found" });
+    ctx.response.status = 404;
+    ctx.response.body = { id: "not-found" };
     return;
   }
 
-  res.json(absences);
+  ctx.response.body = absences;
+});
+
+const absenceBody = z.object({
+  lesson: z.number({ required_error: "required" }),
+  date: z.string({ required_error: "required" }),
 });
 
 /**
@@ -142,30 +147,32 @@ router.get("/absences/:userId", async (req, res) => {
  *                description: Date of the absence
  *                example: "2023-05-14"
  */
-router.post("/absences/:userId", async (req, res) => {
-  const { userId } = req.params;
-  const { lesson, date } = req.body;
+router.post("/absences/:userId", async (ctx) => {
+  const { userId } = ctx.params;
+  const body = ctx.request.body({ type: "json" });
 
-  if (!isValidUUID(userId)) {
-    res.status(400).json({ id: "not-valid" });
+  const result = absenceBody.safeParse(body);
+
+  if (!result.success) {
+    ctx.response.status = 400;
+    ctx.response.body = result.error.flatten();
     return;
   }
 
-  if (!lesson || !date) {
-    res.status(400).json({ id: "required" });
+  if (!isValidUUID(userId)) {
+    ctx.response.status = 400;
+    ctx.response.body = { id: "not-valid" };
     return;
   }
 
   const newAbsence = await db
     .insertInto("Absence")
-    .values({ lesson, date, userId })
+    .values({ lesson: result.data.lesson, date: result.data.date, userId })
     .returning(["id", "lesson", "date"])
     .execute();
 
-  res.json(newAbsence);
+  ctx.response.body = newAbsence;
 });
-
-const scan = multer({ dest: "/absences/scan" });
 
 /**
  * @openapi
@@ -184,9 +191,9 @@ const scan = multer({ dest: "/absences/scan" });
  *                type: string
  *                format: binary
  */
-router.post("/absences/scan", scan.single("image"), (req, res) => {
-  console.log(req.file);
-  res.json({ success: true });
+router.post("/absences/scan", (ctx) => {
+  ctx.response.status = 400;
+  ctx.response.body = { error: "not implemented" };
 });
 
 export default router;
