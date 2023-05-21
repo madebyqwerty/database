@@ -75,12 +75,17 @@ docsRouter.get("/openapi.json", (ctx) => {
   ctx.response.body = specs;
 });
 
-/* app.use(docsRouter.routes());
-app.use(docsRouter.allowedMethods()); */
+app.use(docsRouter.routes());
+app.use(docsRouter.allowedMethods());
 app.use(userRouter.routes());
 app.use(userRouter.allowedMethods());
 app.use(absenceRouter.routes());
 app.use(absenceRouter.allowedMethods());
+
+app.addEventListener("error", (e) => {
+  console.log("COTO JE ZA SRA4KU");
+  console.log("WHAT THE FUCK", e);
+});
 
 console.log("═════════════════════════════════");
 console.log(`      🚀 LAUNCHING on ${port}    `);

@@ -103,6 +103,43 @@ router.get("/absences/:userId", async (ctx) => {
 
   ctx.response.body = absences;
 });
+/**
+ * @openapi
+ * /absences/scan:
+ *  post:
+ *    summary: Creates a new absence by scanning a paper.
+ *    tags: [Absences]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              image:
+ *                type: string
+ *                format: binary
+ */
+router.post("/absences/scan", async (ctx) => {
+  const formDataReader = ctx.request.body({ type: "form-data" }).value;
+  const formDataBody = await formDataReader.read();
+
+  const files = formDataBody.files;
+
+  if (files) {
+    const [file] = files;
+    if (file.filename) {
+      const fileBytes = await Deno.readFile(file.filename);
+      ctx.response.status = 200;
+      ctx.response.headers.set("Content-Type", file.contentType);
+      ctx.response.body = fileBytes;
+      return;
+    }
+  }
+
+  ctx.response.status = 400;
+  ctx.response.body = { error: "no-image" };
+});
 
 const absenceBody = z.object({
   lesson: z.number({ required_error: "required" }),
@@ -174,28 +211,6 @@ router.post("/absences/:userId", async (ctx) => {
     .execute();
 
   ctx.response.body = newAbsence;
-});
-
-/**
- * @openapi
- * /absences/scan:
- *  post:
- *    summary: Creates a new absence by scanning a paper.
- *    tags: [Absences]
- *    requestBody:
- *      required: true
- *      content:
- *        multipart/form-data:
- *          schema:
- *            type: object
- *            properties:
- *              image:
- *                type: string
- *                format: binary
- */
-router.post("/absences/scan", (ctx) => {
-  ctx.response.status = 400;
-  ctx.response.body = { error: "not implemented" };
 });
 
 export default router;
