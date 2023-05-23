@@ -1,7 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run --allow-read --allow-net --allow-env --watch  src/main.ts",
-    "start": "deno run --allow-read --allow-net --allow-env src/main.ts",
+    "dev": "deno run --allow-read --allow-net --allow-env --allow-write --watch  src/main.ts",
+    "start": "deno run --allow-read --allow-net --allow-env --allow-write src/main.ts",
     "test": "deno test --allow-read --allow-net --allow-env",
     "generate": "deno run -A --unstable npm:prisma generate --data-proxy",
     "db-push": "deno run -A --unstable npm:prisma@^4.5 db push"

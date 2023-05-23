@@ -1,10 +1,11 @@
-import { db } from "../kysely.ts";
+import { db } from "../../kysely.ts";
 import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
-// @deno-types="npm:@types/express@4"
-import express from "npm:express@4.18.2";
-import { isValidUUID } from "../utils/isValidUUID.ts";
+import { isValidUUID } from "../../utils/isValidUUID.ts";
+import { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
-const router = express.Router();
+export const userRouter = new Router({
+  prefix: "/api",
+});
 
 /**
  * @swagger
@@ -61,9 +62,12 @@ const router = express.Router();
  *            enum:
  *             - required
  */
-router.get("/users", async (_req, res) => {
+userRouter.get("/users", async (ctx) => {
   const users = await db.selectFrom("User").selectAll().execute();
-  res.json(users);
+  ctx.response.status = 200;
+  ctx.response.type = "application/json";
+  ctx.response.body = users;
+  return;
 });
 
 const userPostReqBodySchema = z.object({
@@ -106,11 +110,13 @@ const userPostReqBodySchema = z.object({
  *             enum:
  *              - not-found
  */
-router.get("/users/:id", async (req, res) => {
-  const id = req.params.id;
+userRouter.get("/users/:id", async (ctx) => {
+  const id = ctx.params.id;
+  ctx.response.type = "application/json";
 
   if (!isValidUUID(id)) {
-    res.status(400).json({ id: "not-valid" });
+    ctx.response.status = 400;
+    ctx.response.body = { id: "not-valid" };
     return;
   }
 
@@ -121,11 +127,13 @@ router.get("/users/:id", async (req, res) => {
     .executeTakeFirst();
 
   if (!user) {
-    res.status(404).json({ user: "not-found" });
+    ctx.response.status = 404;
+    ctx.response.body = { user: "not-found" };
     return;
   }
 
-  res.json(user);
+  ctx.response.status = 200;
+  ctx.response.body = user;
 });
 
 /**
@@ -170,11 +178,14 @@ router.get("/users/:id", async (req, res) => {
  *            example:
  *              name: [required]
  */
-router.post("/users", async (req, res) => {
-  const result = userPostReqBodySchema.safeParse(req.body);
+userRouter.post("/users", async ({ request, response }) => {
+  const body = request.body({ type: "json" });
+
+  const result = userPostReqBodySchema.safeParse(await body.value);
 
   if (!result.success) {
-    res.status(400).json(result.error.flatten());
+    response.status = 400;
+    response.body = result.error.flatten();
     return;
   }
 
@@ -186,7 +197,5 @@ router.post("/users", async (req, res) => {
     .returning(["id", "name"])
     .execute();
 
-  res.json(user);
+  response.body = user;
 });
-
-export default router;

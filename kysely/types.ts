@@ -7,6 +7,7 @@ export type Absence = {
     userId: string;
     id: Generated<string>;
     lesson: number;
+    date: Timestamp;
 };
 export type User = {
     id: Generated<string>;

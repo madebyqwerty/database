@@ -1,7 +1,7 @@
 import { assert } from "https://deno.land/std@0.160.0/_util/assert.ts";
 import { assertEquals } from "https://deno.land/std@0.160.0/testing/asserts.ts";
-import { isValidUUID } from "../utils/isValidUUID.ts";
-import { serverURL } from "../constants.ts";
+import { isValidUUID } from "../../utils/isValidUUID.ts";
+import { serverURL } from "../../constants.ts";
 
 const endpoint = `${serverURL}/users`;
 
@@ -13,7 +13,7 @@ const validateSchema = (user: Record<string, unknown>) => {
   assert(Object.keys(user).includes("id"));
 };
 
-Deno.test("Should create a user", async () => {
+Deno.test("Should create an user", async () => {
   const res = await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -97,7 +97,6 @@ Deno.test(
     const res = await fetch(`${endpoint}/c2437020-f661-4403-a230-5d8afe0f30ce`);
 
     assertEquals(res.status, 404);
-
     const user = await res.json();
 
     assertEquals(user.user, "not-found");
