@@ -3,7 +3,7 @@ import { isValidUUID } from "../../utils/isValidUUID.ts";
 import { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 import z from "https://deno.land/x/zod@v3.21.4/index.ts";
 
-const router = new Router({
+export const absenceRouter = new Router({
   prefix: "/api",
 });
 
@@ -79,7 +79,7 @@ const router = new Router({
  *             - required
  *             - not-valid
  */
-router.get("/absences/:userId", async (ctx) => {
+absenceRouter.get("/absences/:userId", async (ctx) => {
   const { userId } = ctx.params;
 
   if (!isValidUUID(userId)) {
@@ -120,7 +120,7 @@ router.get("/absences/:userId", async (ctx) => {
  *                type: string
  *                format: binary
  */
-router.post("/absences/scan", async (ctx) => {
+absenceRouter.post("/absences/scan", async (ctx) => {
   const formDataReader = ctx.request.body({ type: "form-data" }).value;
   const formDataBody = await formDataReader.read();
 
@@ -186,7 +186,7 @@ const absenceBody = z.object({
  *                description: Date of the absence
  *                example: "2023-05-14"
  */
-router.post("/absences/:userId", async (ctx) => {
+absenceRouter.post("/absences/:userId", async (ctx) => {
   const { userId } = ctx.params;
   const body = ctx.request.body({ type: "json" });
 
@@ -212,5 +212,3 @@ router.post("/absences/:userId", async (ctx) => {
 
   ctx.response.body = newAbsence;
 });
-
-export default router;

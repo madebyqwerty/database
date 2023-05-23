@@ -3,7 +3,7 @@ import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
 import { isValidUUID } from "../../utils/isValidUUID.ts";
 import { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
-export const router = new Router({
+export const userRouter = new Router({
   prefix: "/api",
 });
 
@@ -62,7 +62,7 @@ export const router = new Router({
  *            enum:
  *             - required
  */
-router.get("/users", async (ctx) => {
+userRouter.get("/users", async (ctx) => {
   const users = await db.selectFrom("User").selectAll().execute();
   ctx.response.status = 200;
   ctx.response.type = "application/json";
@@ -110,7 +110,7 @@ const userPostReqBodySchema = z.object({
  *             enum:
  *              - not-found
  */
-router.get("/users/:id", async (ctx) => {
+userRouter.get("/users/:id", async (ctx) => {
   const id = ctx.params.id;
   ctx.response.type = "application/json";
 
@@ -178,7 +178,7 @@ router.get("/users/:id", async (ctx) => {
  *            example:
  *              name: [required]
  */
-router.post("/users", async ({ request, response }) => {
+userRouter.post("/users", async ({ request, response }) => {
   const body = request.body({ type: "json" });
 
   const result = userPostReqBodySchema.safeParse(await body.value);
