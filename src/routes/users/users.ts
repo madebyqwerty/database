@@ -1,7 +1,7 @@
 import { db } from "../../kysely.ts";
-import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
+import { z } from "../../deps.ts";
 import { isValidUUID } from "../../utils/isValidUUID.ts";
-import { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
+import { Router } from "../../deps.ts";
 
 export const userRouter = new Router({
   prefix: "/api",

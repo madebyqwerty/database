@@ -2,7 +2,7 @@ import { port } from "./constants.ts";
 import { docsRouter } from "./routes/docs/docs.ts";
 import { userRouter } from "./routes/users/users.ts";
 import { absenceRouter } from "./routes/absences/absences.ts";
-import { Application } from "https://deno.land/x/oak@v12.4.0/mod.ts";
+import { Application } from "./deps.ts";
 
 export const app = new Application();
 
