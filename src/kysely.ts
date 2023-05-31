@@ -3,16 +3,16 @@ import {
   PostgresAdapter,
   PostgresIntrospector,
   PostgresQueryCompiler,
-} from "https://esm.sh/kysely@0.24.2";
+} from "./deps.ts";
 import { PostgresDriver } from "./postgres-driver.ts";
-import { Pool } from "https://deno.land/x/postgres@v0.17.0/mod.ts";
+import { Pool } from "./deps.ts";
 import { DB } from "../kysely/types.ts";
 
 const pool = new Pool(
   {
     user: "postgres",
     database: "postgres",
-    hostname: "localhost",
+    hostname: "172.17.0.1",
     password: "postgres",
     port: 5432,
   },

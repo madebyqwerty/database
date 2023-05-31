@@ -1,5 +1,3 @@
-// Stolen from here
-
 import {
   CompiledQuery,
   DatabaseConnection,
@@ -7,13 +5,10 @@ import {
   PostgresCursorConstructor,
   QueryResult,
   TransactionSettings,
-} from "https://cdn.jsdelivr.net/npm/kysely/dist/esm/index.js";
-import {
-  freeze,
-  isFunction,
-} from "https://cdn.jsdelivr.net/npm/kysely/dist/esm/util/object-utils.js";
-import { extendStackTrace } from "https://cdn.jsdelivr.net/npm/kysely/dist/esm/util/stack-trace-utils.js";
-import { Pool, PoolClient } from "https://deno.land/x/postgres@v0.17.0/mod.ts";
+} from "./deps.ts";
+import { freeze, isFunction } from "./deps.ts";
+import { extendStackTrace } from "./deps.ts";
+import { Pool, PoolClient } from "./deps.ts";
 
 export interface PostgresDialectConfig {
   pool: Pool | (() => Promise<Pool>);
