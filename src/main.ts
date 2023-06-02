@@ -3,6 +3,7 @@ import { docsRouter } from "./routes/docs/docs.ts";
 import { userRouter } from "./routes/users/users.ts";
 import { absenceRouter } from "./routes/absences/absences.ts";
 import { Application, oakCors } from "./deps.ts";
+import { seed } from "./utils/seed.ts";
 
 export const app = new Application();
 
@@ -38,7 +39,10 @@ app.addEventListener("error", (e) => {
   console.log(e);
 });
 
-console.log("═════════════════════════════════");
-console.log(`      🚀 LAUNCHING on ${port}    `);
-console.log("═════════════════════════════════");
+app.addEventListener("listen", () => {
+  console.log("═════════════════════════════════");
+  console.log(`      🚀 LAUNCHING on ${port}    `);
+  console.log("═════════════════════════════════");
+});
+
 await app.listen({ port });
