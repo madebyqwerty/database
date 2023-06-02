@@ -88,16 +88,20 @@ absenceRouter.get("/absences/:userId", async (ctx) => {
     return;
   }
 
+  console.log(userId);
+
   const absences = await db
     .selectFrom("Absence")
-    .innerJoin("User", "User.name", "Absence.userId")
-    .selectAll()
-    .where("userId", "=", userId)
+    .innerJoin("User", "User.id", "Absence.userId")
+    .select(["User.name", "date", "userId", "Absence.id", "lesson"])
+    .where("Absence.userId", "=", userId)
     .execute();
+
+  console.log(absences);
 
   if (absences.length === 0) {
     ctx.response.status = 404;
-    ctx.response.body = { id: "not-found" };
+    ctx.response.body = { absences: "no-absences" };
     return;
   }
 
