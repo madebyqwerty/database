@@ -2,7 +2,7 @@ import { port } from "./constants.ts";
 import { docsRouter } from "./routes/docs/docs.ts";
 import { userRouter } from "./routes/users/users.ts";
 import { absenceRouter } from "./routes/absences/absences.ts";
-import { Application } from "./deps.ts";
+import { Application, oakCors } from "./deps.ts";
 
 export const app = new Application();
 
@@ -16,6 +16,9 @@ app.use(async (ctx, next) => {
   console.info(`🕒 proccesed in ${rt}`);
   console.info("STATUS:", ctx.response.status);
 });
+
+// Middleware function to set Access-Control-Allow-Origin header
+app.use(oakCors());
 
 app.use(async (ctx, next) => {
   const start = Date.now();
@@ -32,8 +35,7 @@ app.use(absenceRouter.routes());
 app.use(absenceRouter.allowedMethods());
 
 app.addEventListener("error", (e) => {
-  console.log("COTO JE ZA SRA4KU");
-  console.log("WHAT THE FUCK", e);
+  console.log(e);
 });
 
 console.log("═════════════════════════════════");
